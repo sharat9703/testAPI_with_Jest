@@ -1,0 +1,20 @@
+{
+  "name": "testapi_with_jest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "nodemon index.js"
+  },
+  "keywords": [],
+  "author": "Sharat Yaragatti",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jest": "^29.7.0",
+    "oracledb": "^6.6.0"
+  }
+}
