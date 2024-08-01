@@ -35,7 +35,7 @@ const customerControllers = {
         outFormat: oracledb.OUT_FORMAT_OBJECT,
       });
       if (result.rows.length > 0) {
-        res.status(200).json({ status: "success", data: result.rows[0] });
+        res.status(200).json({ status: "success", data: [result.rows[0]] });
       } else {
         res
           .status(404)
