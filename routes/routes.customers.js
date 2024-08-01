@@ -3,9 +3,9 @@ const router = express.Router();
 const customerControllers = require('../controllers/controllers.customers');
 
 router.get('/customers',customerControllers.getCustomers);
-router.get('/customers/:id',customerControllers.getCustomer);
+router.get('/customer/:id',customerControllers.getCustomer);
 
-router.post('/customers',customerControllers.createCustomer);
+router.post('/customer',customerControllers.createCustomer);
 
 router.put('/customer/:id',customerControllers.updateCustomer);
 
