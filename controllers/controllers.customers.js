@@ -88,7 +88,7 @@ const customerControllers = {
       const { name, cust_id, email } = req.body;
       const result = await connection.execute(
         query.selectOne,
-        [req.params.id],
+        [id],
         { outFormat: oracledb.OUT_FORMAT_OBJECT }
       );
       if (result.rows.length == 0) {
