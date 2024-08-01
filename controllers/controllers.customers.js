@@ -39,7 +39,7 @@ const customerControllers = {
       } else {
         res
           .status(404)
-          .send({ status: "unsuccess", message: "Customer not found" });
+          .send({ status: "unsuccess", message: "Customer with id = "+id+" is not found" });
       }
     } catch (err) {
       console.error(err);
@@ -86,8 +86,17 @@ const customerControllers = {
       connection = await oracledb.getConnection(config);
       const id = req.params.id;
       const { name, cust_id, email } = req.body;
-
       const result = await connection.execute(
+        query.selectOne,
+        [req.params.id],
+        { outFormat: oracledb.OUT_FORMAT_OBJECT }
+      );
+      if (result.rows.length == 0) {
+        return res
+          .status(404)
+          .send({ status: "unsuccess", message: "Customer with id = "+id+" is not found" });
+      } 
+      await connection.execute(
         query.update,
         [name, email, cust_id, id],
         { autoCommit: true }
@@ -113,16 +122,17 @@ const customerControllers = {
   deleteCustomer: async (req, res) => {
     let connection;
     try {
+      const {id} = req.params;
       connection = await oracledb.getConnection(config);
       const result = await connection.execute(
         query.selectOne,
-        [req.params.id],
+        [id],
         { outFormat: oracledb.OUT_FORMAT_OBJECT }
       );
       if (result.rows.length == 0) {
         return res
           .status(404)
-          .send({ status: "unsuccess", message: "Customer not found" });
+          .send({ status: "unsuccess", message: "Customer with id = "+id+" is not found" });
       }
       await connection.execute(query.delete, [req.params.id], {
         autoCommit: true,

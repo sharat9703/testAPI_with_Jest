@@ -7,9 +7,9 @@ router.get('/customers/:id',customerControllers.getCustomer);
 
 router.post('/customers',customerControllers.createCustomer);
 
-router.put('/customers/:id',customerControllers.updateCustomer);
+router.put('/customer/:id',customerControllers.updateCustomer);
 
-router.delete('/customers/:id',customerControllers.deleteCustomer);
+router.delete('/customer/:id',customerControllers.deleteCustomer);
 
 module.exports = router;
 
