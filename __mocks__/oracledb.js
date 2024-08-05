@@ -1,17 +1,8 @@
-const mockConnection = {
-    execute: jest.fn(),
-    close: jest.fn().mockResolvedValue()
+// __mocks__/oracledb.js
+const oracledbMock = {
+    createPool: jest.fn(),
+    getPool: jest.fn(),
+    getConnection: jest.fn(),
 };
 
-const mockPool = {
-    getConnection: jest.fn().mockResolvedValue(mockConnection),
-    close: jest.fn().mockResolvedValue()
-};
-
-const oracledb = {
-    createPool: jest.fn().mockResolvedValue(mockPool),
-    getPool: jest.fn().mockReturnValue(mockPool),
-    OBJECT: 0 
-};
-
-module.exports = oracledb;
+module.exports = oracledbMock;

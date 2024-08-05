@@ -18,13 +18,14 @@
     "nodemon": "^3.1.4",
     "oracledb": "^6.6.0"
   },
-  "devDependencies": {
-    "jest": "^29.7.0",
-    "supertest": "^7.0.0"
-  },
   "jest": {
     "clearMocks": true,
     "resetMocks": true,
-    "restoreMocks": true
+    "restoreMocks": true,
+    "testEnvironment": "node"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }

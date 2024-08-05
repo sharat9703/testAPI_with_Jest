@@ -1,5 +1,5 @@
 const oracledb = require("oracledb");
-const customerSchema = require("../models/model.customer");
+const customerSchema = require("../models/customer.model");
 const config = require("../config");
 const query = require("../query");
 const customerControllers = {
@@ -10,7 +10,7 @@ const customerControllers = {
       const result = await connection.execute(
         query.selectAll,
         [], // No binds
-        { outFormat: oracledb.OUT_FORMAT_OBJECT } // Return the result as an object
+        { outFormat: oracledb.OUT_FORMAT_OBJECT } 
       );
       res.status(200).json({ status: "success", data: result.rows });
     } catch (err) {
