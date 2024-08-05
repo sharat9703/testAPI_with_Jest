@@ -57,7 +57,7 @@ describe('Customer API End Points', () => {
         mockPool.getConnection.mockClear();
     });
 
-    it('should get all customers', async () => {
+    test('should get all customers', async () => {
         mockConnection.execute.mockResolvedValue({
             rows: [example_customer],
             metaData: []
@@ -70,7 +70,7 @@ describe('Customer API End Points', () => {
         expect(res.body.data).toEqual([example_customer]);
     });
 
-    it('should return 404 when no customers are found', async () => {
+    test('should return 404 when no customers are found', async () => {
         mockConnection.execute.mockResolvedValue({
             rows: [],
             metaData: []
@@ -83,7 +83,7 @@ describe('Customer API End Points', () => {
         expect(res.body.message).toBe('No customers found');
     });
 
-    it('should get a customer by cust_id', async () => {
+    test('should get a customer by cust_id', async () => {
         mockConnection.execute.mockResolvedValue({
             rows: [example_customer],
             metaData: []
@@ -96,7 +96,7 @@ describe('Customer API End Points', () => {
         expect(res.body.data).toEqual([example_customer]);
     });
 
-    it('should return 404 when customer is not found', async () => {
+    test('should return 404 when customer is not found', async () => {
         mockConnection.execute.mockResolvedValue({
             rows: [],
             metaData: []
@@ -109,7 +109,7 @@ describe('Customer API End Points', () => {
         expect(res.body.message).toBe('Customer with id = 999 is not found');
     });
 
-    it('should create a new customer', async () => {
+    test('should create a new customer', async () => {
         mockConnection.execute.mockResolvedValue({
             rowsAffected: 1
         });
@@ -121,14 +121,14 @@ describe('Customer API End Points', () => {
         expect(res.body.message).toBe('Customer created successfully');
     });
 
-    it('should return 400 for invalid customer data', async () => {
+    test('should return 400 for invalid customer data', async () => {
         const invalidCustomer = { name: 'Sharat' }; // Missing email and cust_id
         const res = await request(app).post('/api/customer').send(invalidCustomer);
 
         expect(res.status).toBe(400); 
     });
 
-    it('should update customer with given cust_id', async () => {
+    test('should update customer with given cust_id', async () => {
         mockConnection.execute.mockResolvedValueOnce({
             rows: [example_customer], // Simulate existing customer
             metaData: []
@@ -144,7 +144,7 @@ describe('Customer API End Points', () => {
         expect(res.body.message).toBe('Customer updated successfully');
     });
 
-    it('should return 404 when updating non-existent customer', async () => {
+    test('should return 404 when updating non-existent customer', async () => {
         mockConnection.execute.mockResolvedValueOnce({
             rows: [] // Simulate customer not found
         });
@@ -156,7 +156,7 @@ describe('Customer API End Points', () => {
         expect(res.body.message).toBe('Customer with id = 999 is not found');
     });
 
-    it('should delete a customer with given cust_id', async () => {
+    test('should delete a customer with given cust_id', async () => {
         mockConnection.execute.mockResolvedValueOnce({
             rows: [example_customer], // Simulate existing customer
             metaData: []
@@ -172,7 +172,7 @@ describe('Customer API End Points', () => {
         expect(res.body.message).toBe('Customer deleted successfully');
     });
 
-    it('should return 404 when deleting non-existent customer', async () => {
+    test('should return 404 when deleting non-existent customer', async () => {
         mockConnection.execute.mockResolvedValueOnce({
             rows: [] // Simulate customer not found
         });
