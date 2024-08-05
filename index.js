@@ -6,7 +6,7 @@ const oracledb = require("oracledb");
 const bodyParser = require("body-parser");
 const port = process.env.PORT;
 const config = require("./config");
-const Routes = require("./routes/customers.routes");
+const Routes = require("./routes/customer.routes");
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
