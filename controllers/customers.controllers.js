@@ -21,7 +21,7 @@ const customerControllers = {
         try {
           await connection.close();
         } catch (err) {
-          console.error(err);
+          console.error(err)
         }
       }
     }
