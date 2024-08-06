@@ -10,8 +10,9 @@ const customerControllers = {
       const result = await connection.execute(
         query.selectAll,
         [], // No binds
-        { outFormat: oracledb.OUT_FORMAT_OBJECT } 
+        { outFormat: oracledb.OUT_FORMAT_OBJECT }
       );
+      // console.log(result);
       res.status(200).json({ status: "success", data: result.rows });
     } catch (err) {
       console.error(err);
@@ -21,7 +22,7 @@ const customerControllers = {
         try {
           await connection.close();
         } catch (err) {
-          console.error(err)
+          console.error(err);
         }
       }
     }
@@ -34,12 +35,16 @@ const customerControllers = {
       const result = await connection.execute(query.selectOne, [id], {
         outFormat: oracledb.OUT_FORMAT_OBJECT,
       });
+      // console.log(result)
       if (result.rows.length > 0) {
         res.status(200).json({ status: "success", data: [result.rows[0]] });
       } else {
         res
           .status(404)
-          .send({ status: "unsuccess", message: "Customer with id = "+id+" is not found" });
+          .send({
+            status: "unsuccess",
+            message: "Customer with id = " + id + " is not found",
+          });
       }
     } catch (err) {
       console.error(err);
@@ -87,28 +92,25 @@ const customerControllers = {
       const id = req.params.id;
       const { name, cust_id, email } = req.body;
       const result = await connection.execute(
-        query.selectOne,
-        [id],
-        { outFormat: oracledb.OUT_FORMAT_OBJECT }
-      );
-      if (result.rows.length == 0) {
-        return res
-          .status(404)
-          .send({ status: "unsuccess", message: "Customer with id = "+id+" is not found" });
-      } 
-      await connection.execute(
         query.update,
         [name, email, cust_id, id],
         { autoCommit: true }
       );
+      // console.log(result);
+      if (result.rowsAffected === 0) {
+        return res
+          .status(404)
+          .send({
+            status: "unsuccess",
+            message: "Customer with id = " + id + " is not found",
+          });
+      }
       res
         .status(200)
         .send({ status: "success", message: "customer updated successfully" });
     } catch (error) {
       console.error(error);
-      res
-        .status(500)
-        .json({ status: "unsuccess", message: error.message });
+      res.status(500).json({ status: "unsuccess", message: error.message });
     } finally {
       if (connection) {
         try {
@@ -122,29 +124,27 @@ const customerControllers = {
   deleteCustomer: async (req, res) => {
     let connection;
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       connection = await oracledb.getConnection(config);
-      const result = await connection.execute(
-        query.selectOne,
-        [id],
-        { outFormat: oracledb.OUT_FORMAT_OBJECT }
-      );
-      if (result.rows.length == 0) {
-        return res
-          .status(404)
-          .send({ status: "unsuccess", message: "Customer with id = "+id+" is not found" });
-      }
-      await connection.execute(query.delete, [req.params.id], {
+
+      const result = await connection.execute(query.delete, [req.params.id], {
         autoCommit: true,
       });
+      // console.log(result);
+      if (result.rowsAffected === 0) {
+        return res
+          .status(404)
+          .send({
+            status: "unsuccess",
+            message: "Customer with id = " + id + " is not found",
+          });
+      }
       res
         .status(200)
         .send({ status: "success", message: "customer deleted successfully" });
     } catch (err) {
       console.error(err);
-      res
-        .status(500)
-        .json({ status: "unsuccess", message: err.message });
+      res.status(500).json({ status: "unsuccess", message: err.message });
     } finally {
       try {
         await connection.close();
