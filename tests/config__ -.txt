@@ -1,0 +1,11 @@
+config -
+    endpoint
+    
+index -
+    reqbody
+    call axios.request
+    well response
+
+    have to check expect response with jest cases. 
+    
+

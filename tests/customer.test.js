@@ -5,10 +5,10 @@ const oracledb = require('oracledb');
 const routes = require('../routes/customer.routes');
 const config = require('../config');
 
-  jest.mock('oracledb', () => ({
-    createPool: jest.fn(),
-    getPool: jest.fn(),
-    getConnection: jest.fn(),
+  jest.mock('oracledb',()=>({
+    createPool : jest.fn(),
+    getPool : jest.fn(),
+    getConnection : jest.fn()
   }));
   
   const example_customer = {
@@ -53,11 +53,11 @@ describe('Customer API End Points', () => {
     });
 
     beforeEach(() => {
-        mockConnection.execute.mockClear();
-        mockPool.getConnection.mockClear();
+        oracledb.getPool().getConnection().execute.mockClear();
+        oracledb.getPool().getConnection().close.mockClear();
     });
 
-    test('should get all customers', async () => {
+    test.only('should get all customers', async () => {
         mockConnection.execute.mockResolvedValue({
             rows: [example_customer],
             metaData: []
